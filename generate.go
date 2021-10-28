@@ -1,0 +1,6 @@
+//go:generate swag init
+//go:generate go fmt ./...
+//go:generate go fix ./...
+//go:generate go mod tidy
+
+package forum

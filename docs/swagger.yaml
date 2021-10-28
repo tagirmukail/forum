@@ -1,0 +1,270 @@
+definitions:
+  dto.Comment:
+    properties:
+      author:
+        type: string
+      content:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      topic_id:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  dto.CommentRequest:
+    properties:
+      content:
+        type: string
+      user_id:
+        type: string
+    type: object
+  dto.Comments:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/dto.Comment'
+        type: array
+      total:
+        type: integer
+    type: object
+  dto.Topic:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  dto.TopicDetailed:
+    properties:
+      author:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      total_comments:
+        type: integer
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  dto.TopicRequest:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      user_id:
+        type: string
+    type: object
+  dto.Topics:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/dto.Topic'
+        type: array
+      total:
+        type: integer
+    type: object
+  dto.User:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.UserRequest:
+    properties:
+      username:
+        type: string
+    type: object
+  forum.HealthResponse:
+    properties:
+      data:
+        example: Service is up and running
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Backend API forum
+  termsOfService: http://swagger.io/terms/
+  title: FORUM API
+  version: "1.0"
+paths:
+  /api/v1/topics:
+    get:
+      description: list topics
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success operation
+          schema:
+            $ref: '#/definitions/dto.Topics'
+      summary: List Topics
+      tags:
+      - Topic
+    post:
+      consumes:
+      - application/json
+      description: create topic
+      parameters:
+      - description: Topic
+        in: body
+        name: Topic
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TopicRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success operation
+          schema:
+            $ref: '#/definitions/dto.Topic'
+      summary: Create Topic
+      tags:
+      - Topic
+  /api/v1/topics/{topic_id}:
+    get:
+      description: get topic
+      parameters:
+      - description: Topic identification
+        in: path
+        name: topic_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success operation
+          schema:
+            $ref: '#/definitions/dto.TopicDetailed'
+      summary: Get Topic
+      tags:
+      - Topic
+  /api/v1/topics/{topic_id}/comments:
+    get:
+      description: list comments
+      parameters:
+      - description: Topic ID
+        in: path
+        name: topic_id
+        required: true
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success operation
+          schema:
+            items:
+              $ref: '#/definitions/dto.Comments'
+            type: array
+      summary: List Comments
+      tags:
+      - Comment
+    post:
+      consumes:
+      - application/json
+      description: create comment
+      parameters:
+      - description: Topic ID
+        in: path
+        name: topic_id
+        required: true
+        type: string
+      - description: Comment
+        in: body
+        name: Comment
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CommentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success operation
+          schema:
+            $ref: '#/definitions/dto.Comment'
+      summary: Create Comment
+      tags:
+      - Comment
+  /api/v1/users:
+    post:
+      consumes:
+      - application/json
+      description: create user
+      parameters:
+      - description: User
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success operation
+          schema:
+            $ref: '#/definitions/dto.User'
+      summary: Create User
+      tags:
+      - User
+  /health:
+    get:
+      description: service health check
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success operation
+          schema:
+            $ref: '#/definitions/forum.HealthResponse'
+      summary: Health
+      tags:
+      - Forum
+swagger: "2.0"
+x-extension-openapi:
+  example: value on a json format

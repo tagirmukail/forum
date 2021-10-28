@@ -1,0 +1,70 @@
+run:
+  concurrency: 4
+  deadline: 5m
+  issues-exit-code: 1
+  tests: true
+
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: false
+  gocognit:
+    min-complexity: 30
+  goconst:
+    min-len: 3
+    min-occurrences: 3
+  gocyclo:
+    min-complexity: 30
+  gofmt:
+    simplify: true
+  golint:
+    min-confidence: 0.8
+  govet:
+    check-shadowing: true
+    enable-all: true
+  lll:
+    line-length: 120
+    tab-width: 1
+  maligned:
+    suggest-new: true
+  wsl:
+    strict-append: true
+    allow-assign-and-call: true
+    allow-multiline-assign: true
+    allow-cuddle-declarations: false
+    allow-trailing-comment: false
+    force-case-trailing-whitespace: 0
+
+linters:
+  enable:
+    - errcheck
+    - staticcheck
+    - unused
+    - gosimple
+    - structcheck
+    - varcheck
+    - ineffassign
+    - deadcode
+    - typecheck
+    - bodyclose
+    - stylecheck
+    - unconvert
+    - goconst
+    - gocyclo
+    - gocognit
+    - gofmt
+    - goimports
+    - lll
+    - unparam
+    - gocritic
+    - wsl
+    - goprintffuncname
+    - whitespace
+    - nolintlint
+  disable-all: true
+  fast: true
